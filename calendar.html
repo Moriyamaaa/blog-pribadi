@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Calendar</title>
+</head>
+<body>
+    <h1>Calendar</h1>
+    <script src='calendar-booking.js'></script>
+
+    <form method="POST" action="/book" name="calendar" method="POST" data-netlify="true">
+  <input type="hidden" name="form-name" value="calendar">
+        <label for="date">Pilih Tanggal Booking:</label>
+        <input type="date" id="date" name="date">
+        <button type="submit">Booking</button><p id="response"></p>
+    </form>
+
+<script>
+document.querySelector("form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const res = await fetch("/book", { method: "POST", body: formData });
+    const data = await res.json();
+    document.getElementById("response").innerText = data.message;
+});
+</script>
+</body>
+</html>

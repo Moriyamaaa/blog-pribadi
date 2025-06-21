@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact</title>
+</head>
+<body>
+    <h1>Kontak</h1>
+    <form method="POST" action="/contact" enctype="multipart/form-data" name="contact" method="POST" data-netlify="true">
+  <input type="hidden" name="form-name" value="contact">
+        <input type="text" name="name" placeholder="Nama" required><br>
+        <input type="email" name="email" placeholder="Email" required><br>
+        <textarea name="message" placeholder="Pesan" required></textarea><br>
+        <input type="file" name="photo" accept="image/*"><br>
+        <button type="submit">Kirim</button>
+        <p id="response"></p>
+    </form>
+    <script>
+        document.querySelector("form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const res = await fetch("/contact", { method: "POST", body: formData });
+            const data = await res.json();
+            document.getElementById("response").innerText = data.message;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>User Tools</title></head>
+<body>
+<h2>🔐 User Token Tools</h2>
+<input id="token" placeholder="Paste token JWT Anda"><br><br>
+
+<button onclick="getProfile()">📄 Lihat Profil</button>
+<button onclick="resetPassword()">🔒 Reset Password</button>
+<button onclick="editUser()">🛠️ Edit User (Admin)</button>
+<button onclick="deleteUser()">🗑️ Hapus User (Admin)</button>
+
+<pre id="output"></pre>
+
+<script>
+async function getProfile() {
+    const res = await fetch('/profile', {
+        headers: { Authorization: 'Bearer ' + document.getElementById('token').value }
+    });
+    document.getElementById('output').innerText = JSON.stringify(await res.json(), null, 2);
+}
+async function resetPassword() {
+    const pass = prompt('Password baru:');
+    const res = await fetch('/reset-password', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + document.getElementById('token').value
+        },
+        body: JSON.stringify({ new_password: pass })
+    });
+    document.getElementById('output').innerText = JSON.stringify(await res.json(), null, 2);
+}
+async function editUser() {
+    const username = prompt('Username yang ingin diubah:');
+    const role = prompt('Role baru (admin/user):');
+    const res = await fetch('/edit-profile', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + document.getElementById('token').value
+        },
+        body: JSON.stringify({ username, role })
+    });
+    document.getElementById('output').innerText = JSON.stringify(await res.json(), null, 2);
+}
+async function deleteUser() {
+    const username = prompt('Username yang ingin dihapus:');
+    const res = await fetch('/delete-user', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + document.getElementById('token').value
+        },
+        body: JSON.stringify({ username })
+    });
+    document.getElementById('output').innerText = JSON.stringify(await res.json(), null, 2);
+}
+</script>
+</body>
+</html>

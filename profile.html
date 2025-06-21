@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profil</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Edit Profil</h2>
+    <form id="profile-form">
+      <input type="text" id="username" placeholder="Nama pengguna" required>
+      <input type="password" id="password" placeholder="Password baru (opsional)">
+      <input type="file" id="avatar" accept="image/*">
+      <button type="submit">Simpan Perubahan</button>
+    </form>
+    <p><a href="dashboard.html">Kembali ke dashboard</a></p>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!currentUser) window.location.href = 'index.html';
+
+    document.getElementById('username').value = currentUser.username;
+
+    document.getElementById('profile-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const name = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+      const avatarInput = document.getElementById('avatar');
+      const message = document.getElementById('message');
+
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      const index = users.findIndex(u => u.email === currentUser.email);
+      if (index === -1) return;
+
+      users[index].username = name;
+      if (pass !== '') users[index].password = pass;
+
+      if (avatarInput.files.length > 0) {
+        const file = avatarInput.files[0];
+        const reader = new FileReader();
+        reader.onloadend = function () {
+          users[index].avatar = reader.result;
+          saveChanges();
+        };
+        reader.readAsDataURL(file);
+      } else {
+        saveChanges();
+      }
+
+      function saveChanges() {
+        users[index].activity.push(`Update profil at ${new Date().toLocaleString()}`);
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('currentUser', JSON.stringify(users[index]));
+        message.textContent = 'Profil berhasil diperbarui';
+        message.style.color = 'green';
+      }
+    });
+  </script>
+</body>
+</html>

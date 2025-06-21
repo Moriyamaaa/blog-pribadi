@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Register Pengguna</title></head>
+<body>
+<h2>Form Registrasi</h2>
+<form onsubmit="return register(event)" name="register" method="POST" data-netlify="true">
+  <input type="hidden" name="form-name" value="register">
+    <input id="username" placeholder="Username" required><br>
+    <input id="password" type="password" placeholder="Password" required><br>
+    <select id="role">
+        <option value="user">User Biasa</option>
+        <option value="admin">Admin</option>
+    </select><br>
+    <button>Daftar</button>
+</form>
+<p id="result"></p>
+<script>
+async function register(e) {
+    e.preventDefault();
+    const res = await fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value,
+            role: document.getElementById('role').value
+        })
+    });
+    const data = await res.json();
+    document.getElementById('result').innerText = data.msg;
+}
+</script>
+</body>
+</html>

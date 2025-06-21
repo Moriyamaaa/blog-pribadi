@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JWT Login Demo</title>
+</head>
+<body>
+    <h1>Login JWT</h1>
+    <input id="username" placeholder="Username" value="admin"><br>
+    <input id="password" placeholder="Password" type="password" value="admin123"><br>
+    <button onclick="login()">Login</button>
+    <p id="status"></p>
+    <script>
+        let token = null;
+        async function login() {
+            const res = await fetch('/token-login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: document.getElementById('username').value,
+                    password: document.getElementById('password').value
+                })
+            });
+            const data = await res.json();
+            if (data.access_token) {
+                token = data.access_token;
+                document.getElementById('status').innerText = 'Login berhasil';
+                console.log('Token:', token);
+                checkSecure();
+            } else {
+                document.getElementById('status').innerText = 'Gagal login';
+            }
+        }
+        async function checkSecure() {
+            const res = await fetch('/secure-admin', {
+                headers: { Authorization: 'Bearer ' + token }
+            });
+            const data = await res.json();
+            console.log('Secure data:', data);
+        }
+    </script>
+</body>
+</html>
