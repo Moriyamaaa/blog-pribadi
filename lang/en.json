@@ -1,0 +1,18 @@
+{
+  "title": "Welcome to Personal Blog",
+  "login": "Login",
+  "register": "Register",
+  "logout": "Logout",
+  "edit_profile": "Edit Profile",
+  "reset_password": "Reset Password",
+  "admin_panel": "Admin Panel",
+  "search_placeholder": "Search name/email...",
+  "filter_role": "Filter Role",
+  "export_data": "Export Data",
+  "import_data": "Import Data",
+  "dark_mode": "Dark Mode",
+  "last_login": "Last login",
+  "edit": "Edit",
+  "comment": "Comment",
+  "post": "Post"
+}

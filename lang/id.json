@@ -1,0 +1,18 @@
+{
+  "title": "Selamat Datang di Blog Pribadi",
+  "login": "Masuk",
+  "register": "Daftar",
+  "logout": "Keluar",
+  "edit_profile": "Edit Profil",
+  "reset_password": "Reset Password",
+  "admin_panel": "Panel Admin",
+  "search_placeholder": "Cari nama/email...",
+  "filter_role": "Filter Peran",
+  "export_data": "Ekspor Data",
+  "import_data": "Impor Data",
+  "dark_mode": "Mode Gelap",
+  "last_login": "Login terakhir",
+  "edit": "Edit",
+  "comment": "Komentar",
+  "post": "Posting"
+}
